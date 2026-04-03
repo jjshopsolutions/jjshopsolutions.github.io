@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — JJ Shop Solutions & Services</title>
+  <meta name="description" content="Browse JJ Shop's ready-made business software. The Sales & Inventory Manager app is now available. More apps coming soon.">
+  <link rel="icon" type="image/png" href="assets/img/icon-192.png">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* PAGE HEADER */
+    .page-hero {
+      padding:160px 48px 80px; text-align:center;
+      background:radial-gradient(ellipse at 50% 60%, var(--navy-mid) 0%, var(--navy) 70%);
+      position:relative; z-index:1; overflow:hidden;
+    }
+    .page-hero h1 { font-size:clamp(2rem,4vw,3.2rem); margin-bottom:14px; }
+    .page-hero p { font-size:1.05rem; color:var(--text-muted); max-width:540px; margin:0 auto; }
+    .hero-glow { position:absolute; top:10%; left:50%; transform:translateX(-50%);
+      width:500px; height:500px; pointer-events:none;
+      background:radial-gradient(circle,rgba(212,175,55,0.07) 0%,transparent 65%); }
+
+    /* PRICING TOGGLE */
+    .pricing-toggle-wrap {
+      display:flex; align-items:center; justify-content:center; gap:16px;
+      margin:0 auto 60px; z-index:1; position:relative;
+    }
+    .toggle-label { font-size:0.88rem; color:var(--text-muted); font-weight:500; }
+    .toggle-label.active { color:var(--gold); }
+    .toggle-switch {
+      width:52px; height:28px; background:rgba(212,175,55,0.15);
+      border:1.5px solid rgba(212,175,55,0.35); border-radius:30px;
+      cursor:pointer; position:relative; transition:var(--transition);
+    }
+    .toggle-switch::after {
+      content:''; position:absolute; top:3px; left:3px;
+      width:18px; height:18px; border-radius:50%;
+      background:var(--gold); transition:var(--transition);
+    }
+    .toggle-switch.annual::after { transform:translateX(24px); }
+    .save-badge {
+      background:rgba(74,180,74,0.15); color:#6dca6d;
+      border:1px solid rgba(74,180,74,0.3); border-radius:20px;
+      padding:3px 10px; font-size:0.72rem; font-weight:600;
+    }
+
+    /* PRODUCTS SECTION */
+    .products-section {
+      padding:60px 48px 120px; max-width:1200px; margin:0 auto;
+      position:relative; z-index:1;
+    }
+
+    /* PRODUCT CARD */
+    .product-card {
+      background:var(--glass); border:1px solid var(--glass-border);
+      border-radius:20px; backdrop-filter:blur(20px);
+      display:grid; grid-template-columns:1fr 1.1fr;
+      overflow:hidden; margin-bottom:40px; transition:var(--transition);
+    }
+    .product-card:hover { box-shadow:0 16px 60px rgba(212,175,55,0.15); transform:translateY(-3px); }
+    .product-info { padding:52px 48px; }
+    .product-badges { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+    .product-title { font-size:1.9rem; margin-bottom:12px; }
+    .product-desc { color:var(--text-muted); font-size:0.93rem; line-height:1.75; margin-bottom:28px; }
+    .product-feats { display:flex; flex-direction:column; gap:9px; margin-bottom:36px; }
+    .product-feat { display:flex; align-items:center; gap:10px; font-size:0.88rem; color:var(--text-muted); }
+    .feat-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+
+    /* PRICING TIERS */
+    .pricing-tiers {
+      display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:32px;
+    }
+    .tier {
+      background:rgba(255,255,255,0.03); border:1px solid rgba(212,175,55,0.2);
+      border-radius:12px; padding:18px 16px; text-align:center;
+      transition:var(--transition); cursor:default;
+    }
+    .tier.featured { border-color:var(--gold); background:rgba(212,175,55,0.08); }
+    .tier-name { font-size:0.7rem; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+    .tier.featured .tier-name { color:var(--gold); }
+    .tier-price { font-family:'Cinzel',serif; font-size:1.5rem; color:var(--text); font-weight:700; }
+    .tier-price span { font-size:0.75rem; color:var(--text-muted); font-family:'Outfit',sans-serif; font-weight:400; }
+    .tier.featured .tier-price { color:var(--gold); }
+    .tier-desc { font-size:0.72rem; color:var(--text-muted); margin-top:6px; line-height:1.4; }
+    .tier-best { font-size:0.65rem; background:var(--gold); color:#000; border-radius:10px;
+      padding:2px 8px; display:inline-block; margin-bottom:6px; font-weight:700; letter-spacing:1px; }
+
+    .product-btns { display:flex; gap:12px; flex-wrap:wrap; }
+
+    /* PRODUCT VISUAL */
+    .product-visual {
+      background:linear-gradient(135deg,#0a1e40 0%,#060f20 100%);
+      display:flex; align-items:center; justify-content:center;
+      padding:40px; border-left:1px solid var(--glass-border); position:relative; overflow:hidden;
+    }
+    .product-visual::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse at 50% 30%,rgba(212,175,55,0.07) 0%,transparent 65%);
+    }
+    .pv-screen {
+      width:100%; max-width:380px;
+      background:var(--navy-card); border-radius:12px;
+      border:1.5px solid var(--navy-border); overflow:hidden;
+      box-shadow:0 0 60px rgba(212,175,55,0.18), 0 20px 80px rgba(0,0,0,0.8);
+      position:relative; z-index:1;
+    }
+    .pv-topbar {
+      background:linear-gradient(90deg,#0d1b33,#1a2a4a);
+      height:32px; display:flex; align-items:center; padding:0 14px;
+      border-bottom:1px solid rgba(212,175,55,0.25); gap:10px;
+    }
+    .pv-dot { width:9px; height:9px; border-radius:50%; }
+    .pv-brand { font-family:'Cinzel',serif; font-size:9px; color:var(--gold); letter-spacing:2px; margin-left:auto; margin-right:auto; }
+    .pv-body { padding:16px; display:flex; flex-direction:column; gap:12px; }
+    .pv-row { display:flex; gap:10px; }
+    .pv-kpi {
+      flex:1; background:rgba(255,255,255,0.03);
+      border:1px solid rgba(212,175,55,0.15); border-radius:7px; padding:10px;
+    }
+    .pv-kl { font-size:6.5px; color:#6a8aaa; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+    .pv-kv { font-size:15px; font-weight:700; color:var(--gold); }
+    .pv-ks { font-size:6px; color:#4a7a4a; margin-top:2px; }
+    .pv-chart {
+      background:rgba(255,255,255,0.02); border:1px solid rgba(212,175,55,0.12);
+      border-radius:7px; padding:10px;
+    }
+    .pv-ct { font-size:6.5px; color:#8aaac8; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+    .pv-bars { display:flex; align-items:flex-end; height:55px; gap:5px; padding:0 2px; }
+    .pv-bar { flex:1; border-radius:2px 2px 0 0; background:linear-gradient(180deg,var(--gold),rgba(212,175,55,0.25)); }
+    .pv-bar.hi { background:linear-gradient(180deg,var(--gold-light),var(--gold)); }
+    .pv-table { display:flex; flex-direction:column; gap:5px; }
+    .pv-tr {
+      display:flex; align-items:center; gap:6px; padding:5px 8px;
+      background:rgba(255,255,255,0.02); border-radius:4px;
+    }
+    .pv-tc { height:7px; border-radius:2px; background:rgba(212,175,55,0.12); }
+    .pv-badge {
+      font-size:5.5px; padding:2px 6px; border-radius:3px;
+      font-weight:700; margin-left:auto; white-space:nowrap;
+    }
+    .pv-badge.g { background:rgba(74,180,74,0.2); color:#6dca6d; }
+    .pv-badge.r { background:rgba(180,74,74,0.2); color:#c06060; }
+
+    /* COMING SOON GRID */
+    .coming-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:60px;
+    }
+    .coming-card {
+      background:var(--glass); border:1px solid var(--glass-border);
+      border-radius:var(--radius); padding:36px 32px; text-align:center;
+      backdrop-filter:blur(20px); transition:var(--transition);
+    }
+    .coming-card:hover { transform:translateY(-4px); border-color:rgba(212,175,55,0.35); }
+    .coming-icon { font-size:2.5rem; margin-bottom:16px; display:block;
+      filter:grayscale(0.4); }
+    .coming-card h3 { font-size:1.1rem; margin-bottom:10px; color:var(--text-muted); }
+    .coming-card p { font-size:0.85rem; color:var(--text-muted); opacity:0.7; line-height:1.6; }
+    .coming-card .badge-soon { margin-top:16px; display:inline-block; }
+
+    /* TRIAL BANNER */
+    .trial-banner {
+      background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(13,27,51,0.8));
+      border:1px solid rgba(212,175,55,0.35); border-radius:var(--radius);
+      padding:40px 52px; display:flex; align-items:center;
+      justify-content:space-between; gap:24px; flex-wrap:wrap;
+      margin:60px 0 0; backdrop-filter:blur(20px);
+    }
+    .trial-text h3 { font-size:1.4rem; margin-bottom:8px; }
+    .trial-text p { color:var(--text-muted); font-size:0.9rem; }
+
+    @media(max-width:900px){
+      .page-hero { padding:130px 24px 60px; }
+      .product-card { grid-template-columns:1fr; }
+      .product-visual { display:none; }
+      .product-info { padding:36px 28px; }
+      .pricing-tiers { grid-template-columns:1fr; }
+      .coming-grid { grid-template-columns:1fr 1fr; }
+      .products-section { padding:40px 24px 80px; }
+      .trial-banner { padding:28px 24px; }
+    }
+    @media(max-width:560px){
+      .coming-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-logo">
+    <img src="assets/img/logo.png" alt="JJ Shop Logo">
+    <div>
+      <div class="nav-logo-text">JJ SHOP</div>
+      <div class="nav-logo-sub">Solutions & Services</div>
+    </div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html" class="active">Products</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get a Quote</a>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="hero-glow"></div>
+  <div class="particles" id="particles"></div>
+  <div class="reveal">
+    <div class="section-eyebrow">Software Products</div>
+    <h1>Our <span class="gold-text">Products</span></h1>
+    <p>Ready-made, affordable software built for Philippine small businesses. Download, license, and run today.</p>
+  </div>
+</section>
+
+<!-- PRICING TOGGLE -->
+<div class="pricing-toggle-wrap reveal">
+  <span class="toggle-label active" id="lblMonthly">Monthly</span>
+  <div class="toggle-switch" id="pricingToggle" onclick="togglePricing()"></div>
+  <span class="toggle-label" id="lblAnnual">Annual</span>
+  <span class="save-badge">Save 20%</span>
+</div>
+
+<!-- PRODUCTS -->
+<div class="products-section">
+
+  <!-- INVTY APP CARD -->
+  <div class="product-card reveal">
+    <div class="product-info">
+      <div class="product-badges">
+        <span class="badge badge-gold">⭐ Available Now</span>
+        <span class="badge badge-green">✓ Windows</span>
+        <span class="badge badge-green">✓ Network-Ready</span>
+      </div>
+      <h2 class="product-title"><span class="gold-text">JJ Shop</span> Sales &amp; Inventory Manager</h2>
+      <p class="product-desc">A complete, offline-first sales and inventory solution built specifically for Philippine retail businesses. Manage products, record sales, print receipts, track customers, and view reports — all from one clean dashboard.</p>
+      <div class="product-feats">
+        <div class="product-feat"><div class="feat-dot"></div>Sales recording with receipt printing (thermal &amp; PDF)</div>
+        <div class="product-feat"><div class="feat-dot"></div>Full inventory tracking with low-stock alerts</div>
+        <div class="product-feat"><div class="feat-dot"></div>Barcode scanning &amp; label printing</div>
+        <div class="product-feat"><div class="feat-dot"></div>Daily, monthly &amp; yearly sales reports with charts</div>
+        <div class="product-feat"><div class="feat-dot"></div>Customer management &amp; credit tracking</div>
+        <div class="product-feat"><div class="feat-dot"></div>Activity logs &amp; user management</div>
+        <div class="product-feat"><div class="feat-dot"></div>Mobile access via local Wi-Fi network</div>
+        <div class="product-feat"><div class="feat-dot"></div>Offline operation — no internet required</div>
+      </div>
+
+      <div class="pricing-tiers">
+        <div class="tier">
+          <div class="tier-name">Starter</div>
+          <div class="tier-price" data-monthly="₱299" data-annual="₱239">₱299 <span>/mo</span></div>
+          <div class="tier-desc">1 device · Basic features</div>
+        </div>
+        <div class="tier featured">
+          <div class="tier-best">POPULAR</div>
+          <div class="tier-name">Professional</div>
+          <div class="tier-price" data-monthly="₱499" data-annual="₱399">₱499 <span>/mo</span></div>
+          <div class="tier-desc">3 devices · Full features</div>
+        </div>
+        <div class="tier">
+          <div class="tier-name">Business</div>
+          <div class="tier-price" data-monthly="₱799" data-annual="₱639">₱799 <span>/mo</span></div>
+          <div class="tier-desc">Unlimited · Priority support</div>
+        </div>
+      </div>
+
+      <div class="product-btns">
+        <a href="contact.html?product=invty" class="btn btn-primary">🛒 Get a License</a>
+        <a href="contact.html?product=invty-trial" class="btn btn-outline">🎯 14-Day Free Trial</a>
+      </div>
+    </div>
+
+    <div class="product-visual">
+      <div class="pv-screen">
+        <div class="pv-topbar">
+          <div class="pv-dot" style="background:#d4af37;"></div>
+          <div class="pv-dot" style="background:#4a7a4a;"></div>
+          <div class="pv-dot" style="background:#4a6aaa;"></div>
+          <div class="pv-brand">⚙ JJ SHOP MANAGER</div>
+        </div>
+        <div class="pv-body">
+          <div class="pv-row">
+            <div class="pv-kpi">
+              <div class="pv-kl">Total Sales</div>
+              <div class="pv-kv">₱48,250</div>
+              <div class="pv-ks">▲ +12.4% vs last month</div>
+            </div>
+            <div class="pv-kpi">
+              <div class="pv-kl">Products</div>
+              <div class="pv-kv">324</div>
+              <div class="pv-ks">Items tracked</div>
+            </div>
+            <div class="pv-kpi">
+              <div class="pv-kl">Orders</div>
+              <div class="pv-kv">186</div>
+              <div class="pv-ks">▲ +8 today</div>
+            </div>
+          </div>
+          <div class="pv-chart">
+            <div class="pv-ct">Monthly Revenue Trend</div>
+            <div class="pv-bars">
+              <div class="pv-bar" style="height:35%;"></div>
+              <div class="pv-bar" style="height:50%;"></div>
+              <div class="pv-bar" style="height:42%;"></div>
+              <div class="pv-bar" style="height:65%;"></div>
+              <div class="pv-bar hi" style="height:80%;"></div>
+              <div class="pv-bar" style="height:70%;"></div>
+              <div class="pv-bar" style="height:75%;"></div>
+              <div class="pv-bar hi" style="height:90%;"></div>
+            </div>
+          </div>
+          <div class="pv-table">
+            <div class="pv-tr">
+              <div class="pv-tc" style="width:100px;"></div>
+              <div class="pv-tc" style="width:40px;margin-left:auto;"></div>
+              <div class="pv-badge g">IN STOCK</div>
+            </div>
+            <div class="pv-tr">
+              <div class="pv-tc" style="width:80px;"></div>
+              <div class="pv-tc" style="width:40px;margin-left:auto;"></div>
+              <div class="pv-badge r">LOW STOCK</div>
+            </div>
+            <div class="pv-tr">
+              <div class="pv-tc" style="width:90px;"></div>
+              <div class="pv-tc" style="width:40px;margin-left:auto;"></div>
+              <div class="pv-badge g">IN STOCK</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMING SOON -->
+  <div id="coming-soon">
+    <div class="section-header reveal" style="margin-top:80px;">
+      <div class="section-eyebrow">In Development</div>
+      <h2>Coming <span class="gold-text">Soon</span></h2>
+      <p>More powerful tools are on the way. Register your interest and be the first to know.</p>
+    </div>
+    <div class="coming-grid">
+      <div class="coming-card reveal">
+        <span class="coming-icon">🧾</span>
+        <h3>JJ Quotation & Invoice Maker</h3>
+        <p>Create professional quotations and invoices in seconds. PDF export with your business branding.</p>
+        <span class="badge badge-soon">Coming Soon</span>
+      </div>
+      <div class="coming-card reveal">
+        <span class="coming-icon">👥</span>
+        <h3>JJ Payroll Manager</h3>
+        <p>Simple payroll management for small businesses. Track employee hours, compute pay, and print payslips.</p>
+        <span class="badge badge-soon">Coming Soon</span>
+      </div>
+      <div class="coming-card reveal">
+        <span class="coming-icon">📦</span>
+        <h3>JJ Purchase Order System</h3>
+        <p>Manage supplier orders, track deliveries, and keep your supply chain organized in one place.</p>
+        <span class="badge badge-soon">Coming Soon</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRIAL BANNER -->
+  <div class="trial-banner reveal">
+    <div class="trial-text">
+      <h3><span class="gold-text">Try Before You Buy</span></h3>
+      <p>All products come with a 14-day free trial. No credit card required. Full features unlocked during trial.</p>
+    </div>
+    <a href="contact.html?product=trial" class="btn btn-primary">🎯 Start Free Trial</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <img src="assets/img/logo.png" alt="JJ Shop Logo">
+        <div>
+          <div class="footer-brand-name">JJ SHOP</div>
+          <div class="footer-brand-sub">Solutions & Services</div>
+        </div>
+      </div>
+      <p class="footer-desc">Smart software solutions and custom development services for Philippine small businesses. EST. 2026.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="products.html">Sales & Inventory Manager</a></li>
+        <li><a href="products.html#coming-soon">Coming Soon</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Desktop Apps</a></li>
+        <li><a href="services.html">Mobile Apps</a></li>
+        <li><a href="services.html">Excel / VBA</a></li>
+        <li><a href="services.html">Web Apps</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html">Request a Quote</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 <span>JJ Shop Solutions & Services</span>. All rights reserved.</div>
+    <div class="footer-copy">📧 jjshopsolutions04@gmail.com</div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // Particles
+  const pc=document.getElementById('particles');
+  for(let i=0;i<12;i++){
+    const p=document.createElement('div'); p.className='particle';
+    const s=Math.random()*4+2;
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;bottom:-20px;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*8}s;opacity:${Math.random()*0.4+0.1}`;
+    pc.appendChild(p);
+  }
+
+  // Scroll reveal
+  const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('visible')),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  // Scroll top
+  const st=document.getElementById('scrollTop');
+  window.addEventListener('scroll',()=>{ st.classList.toggle('visible',window.scrollY>400); });
+
+  // Hamburger
+  function toggleNav(){ document.getElementById('navLinks').classList.toggle('open'); }
+
+  // Navbar scroll
+  window.addEventListener('scroll',()=>{
+    document.getElementById('navbar').style.boxShadow=window.scrollY>50?'0 4px 30px rgba(0,0,0,0.5)':'none';
+  });
+
+  // Pricing toggle
+  let isAnnual=false;
+  function togglePricing(){
+    isAnnual=!isAnnual;
+    document.getElementById('pricingToggle').classList.toggle('annual',isAnnual);
+    document.getElementById('lblMonthly').classList.toggle('active',!isAnnual);
+    document.getElementById('lblAnnual').classList.toggle('active',isAnnual);
+    document.querySelectorAll('.tier-price').forEach(el=>{
+      const mv=el.dataset.monthly, av=el.dataset.annual;
+      const suffix=isAnnual?'<span>/mo billed annually</span>':'<span>/mo</span>';
+      el.innerHTML=(isAnnual?av:mv)+suffix;
+    });
+  }
+</script>
+</body>
+</html>
