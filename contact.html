@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — JJ Shop Solutions & Services</title>
+  <meta name="description" content="Contact JJ Shop Solutions & Services for product licenses, free trials, or custom software development inquiries. We respond within 24 hours.">
+  <link rel="icon" type="image/png" href="assets/img/icon-192.png">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .page-hero {
+      padding:160px 48px 100px; text-align:center;
+      background:radial-gradient(ellipse at 50% 60%, var(--navy-mid) 0%, var(--navy) 70%);
+      position:relative; z-index:1; overflow:hidden;
+    }
+    .page-hero h1 { font-size:clamp(2rem,4vw,3.2rem); margin-bottom:14px; }
+    .page-hero p { font-size:1.05rem; color:var(--text-muted); max-width:540px; margin:0 auto; }
+    .hero-glow { position:absolute; top:10%; left:50%; transform:translateX(-50%);
+      width:500px; height:500px; pointer-events:none;
+      background:radial-gradient(circle,rgba(212,175,55,0.07) 0%,transparent 65%); }
+
+    /* CONTACT LAYOUT */
+    .contact-section {
+      padding:80px 48px 120px; max-width:1200px; margin:0 auto;
+      position:relative; z-index:1;
+    }
+    .contact-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:60px; }
+
+    /* CONTACT INFO */
+    .contact-info { display:flex; flex-direction:column; gap:28px; }
+    .info-card {
+      background:var(--glass); border:1px solid var(--glass-border);
+      border-radius:var(--radius); padding:28px 28px;
+      backdrop-filter:blur(20px); transition:var(--transition);
+      display:flex; align-items:flex-start; gap:18px;
+    }
+    .info-card:hover { border-color:rgba(212,175,55,0.4); transform:translateX(4px); }
+    .info-icon {
+      width:48px; height:48px; border-radius:12px; flex-shrink:0;
+      background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.25);
+      display:flex; align-items:center; justify-content:center; font-size:1.3rem;
+    }
+    .info-content h4 { font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold-dim); margin-bottom:6px; }
+    .info-content p { font-size:0.92rem; color:var(--text); }
+    .info-content a { color:var(--gold); text-decoration:none; font-weight:500; transition:var(--transition); }
+    .info-content a:hover { text-decoration:underline; }
+    .info-content small { color:var(--text-muted); font-size:0.78rem; display:block; margin-top:3px; }
+
+    /* RESPONSE TIME */
+    .response-card {
+      background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(13,27,51,0.7));
+      border:1px solid rgba(212,175,55,0.3); border-radius:var(--radius);
+      padding:24px 28px; backdrop-filter:blur(20px);
+    }
+    .response-card h4 { font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold-dim); margin-bottom:12px; }
+    .response-items { display:flex; flex-direction:column; gap:8px; }
+    .response-item { display:flex; align-items:center; gap:10px; font-size:0.85rem; color:var(--text-muted); }
+    .response-dot { width:8px; height:8px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+
+    /* FORM */
+    .contact-form-wrap {
+      background:var(--glass); border:1px solid var(--glass-border);
+      border-radius:20px; backdrop-filter:blur(20px); padding:52px 48px;
+      position:relative; overflow:hidden;
+    }
+    .contact-form-wrap::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    }
+    .form-header { margin-bottom:36px; }
+    .form-header h2 { font-size:1.6rem; margin-bottom:8px; }
+    .form-header p { color:var(--text-muted); font-size:0.9rem; }
+
+    /* INQUIRY TABS */
+    .inquiry-tabs { display:flex; gap:8px; margin-bottom:32px; flex-wrap:wrap; }
+    .tab-btn {
+      padding:8px 18px; border-radius:20px; font-size:0.78rem; font-weight:600;
+      letter-spacing:0.5px; cursor:pointer; transition:var(--transition);
+      border:1.5px solid rgba(212,175,55,0.25); background:transparent;
+      color:var(--text-muted);
+    }
+    .tab-btn.active {
+      background:rgba(212,175,55,0.12); border-color:var(--gold); color:var(--gold);
+    }
+    .tab-btn:hover { border-color:rgba(212,175,55,0.5); color:var(--text); }
+
+    /* FORM FIELDS */
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .form-group { display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+    .form-group label {
+      font-size:0.78rem; letter-spacing:2px; text-transform:uppercase;
+      color:var(--text-muted); font-weight:500;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background:rgba(255,255,255,0.04); border:1.5px solid rgba(212,175,55,0.2);
+      border-radius:var(--radius-sm); padding:13px 16px;
+      color:var(--text); font-family:'Outfit',sans-serif; font-size:0.93rem;
+      outline:none; transition:var(--transition); width:100%;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color:var(--gold); background:rgba(212,175,55,0.05);
+      box-shadow:0 0 0 3px rgba(212,175,55,0.1);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color:rgba(106,138,170,0.6); }
+    .form-group select option { background:var(--navy-card); color:var(--text); }
+    .form-group textarea { resize:vertical; min-height:130px; }
+
+    /* BUDGET RANGE */
+    .budget-options { display:flex; flex-wrap:wrap; gap:8px; }
+    .budget-opt {
+      padding:7px 16px; border-radius:20px; font-size:0.78rem;
+      border:1.5px solid rgba(212,175,55,0.2); background:transparent;
+      color:var(--text-muted); cursor:pointer; transition:var(--transition);
+    }
+    .budget-opt.selected { border-color:var(--gold); color:var(--gold); background:rgba(212,175,55,0.08); }
+    .budget-opt:hover { border-color:rgba(212,175,55,0.5); }
+
+    /* SUBMIT */
+    .form-submit { display:flex; align-items:center; gap:18px; margin-top:8px; flex-wrap:wrap; }
+    .btn-submit {
+      flex:1; min-width:200px; padding:15px 32px; border-radius:30px;
+      background:linear-gradient(135deg,var(--gold-light),var(--gold));
+      color:#000; font-weight:700; font-size:0.92rem; letter-spacing:1px;
+      text-transform:uppercase; cursor:pointer; border:none; outline:none;
+      transition:var(--transition); box-shadow:0 0 24px rgba(212,175,55,0.3);
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    .btn-submit:hover { transform:translateY(-2px); box-shadow:0 8px 40px rgba(212,175,55,0.5); }
+    .btn-submit:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+    .form-note { font-size:0.78rem; color:var(--text-muted); line-height:1.5; }
+
+    /* SUCCESS STATE */
+    .form-success {
+      display:none; text-align:center; padding:40px 20px;
+    }
+    .form-success .success-icon { font-size:3rem; margin-bottom:16px; display:block; }
+    .form-success h3 { font-size:1.4rem; margin-bottom:10px; color:var(--gold); }
+    .form-success p { color:var(--text-muted); font-size:0.9rem; }
+
+    @media(max-width:900px){
+      .page-hero { padding:130px 24px 70px; }
+      .contact-section { padding:60px 24px 80px; }
+      .contact-grid { grid-template-columns:1fr; gap:36px; }
+      .contact-form-wrap { padding:36px 28px; }
+      .form-row { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-logo">
+    <img src="assets/img/logo.png" alt="JJ Shop Logo">
+    <div>
+      <div class="nav-logo-text">JJ SHOP</div>
+      <div class="nav-logo-sub">Solutions & Services</div>
+    </div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get a Quote</a>
+  <div class="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="page-hero">
+  <div class="hero-glow"></div>
+  <div class="particles" id="particles"></div>
+  <div class="reveal">
+    <div class="section-eyebrow">Get in Touch</div>
+    <h1><span class="gold-text">Contact</span> Us</h1>
+    <p>Have a question? Want a product license or a custom project? We'd love to hear from you. We respond within 24 hours.</p>
+  </div>
+</section>
+
+<section class="contact-section section">
+  <div class="contact-grid">
+
+    <!-- CONTACT INFO -->
+    <div class="contact-info reveal">
+      <div class="info-card">
+        <div class="info-icon">📧</div>
+        <div class="info-content">
+          <h4>Email Us</h4>
+          <p><a href="mailto:jjshopsolutions04@gmail.com">jjshopsolutions04@gmail.com</a></p>
+          <small>Best for detailed inquiries and quotes</small>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon">📍</div>
+        <div class="info-content">
+          <h4>Location</h4>
+          <p>Philippines</p>
+          <small>Serving businesses nationwide</small>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon">⏰</div>
+        <div class="info-content">
+          <h4>Business Hours</h4>
+          <p>Monday – Saturday</p>
+          <small>8:00 AM – 6:00 PM PHT</small>
+        </div>
+      </div>
+
+      <div class="response-card">
+        <h4>What to Expect</h4>
+        <div class="response-items">
+          <div class="response-item"><div class="response-dot"></div>Reply within 24 hours on business days</div>
+          <div class="response-item"><div class="response-dot"></div>Free consultation for custom projects</div>
+          <div class="response-item"><div class="response-dot"></div>No-obligation quote provided upfront</div>
+          <div class="response-item"><div class="response-dot"></div>14-day free trial available for all products</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="contact-form-wrap reveal">
+      <div class="form-header">
+        <h2>Send Us a <span class="gold-text">Message</span></h2>
+        <p>Fill in the form below and we'll get back to you as soon as possible.</p>
+      </div>
+
+      <!-- INQUIRY TYPE TABS -->
+      <div class="inquiry-tabs">
+        <button class="tab-btn active" onclick="setTab(this,'general')" id="tab-general">💬 General Inquiry</button>
+        <button class="tab-btn" onclick="setTab(this,'product')" id="tab-product">📦 Product License</button>
+        <button class="tab-btn" onclick="setTab(this,'trial')" id="tab-trial">🎯 Free Trial</button>
+        <button class="tab-btn" onclick="setTab(this,'custom')" id="tab-custom">🧩 Custom Project</button>
+      </div>
+
+      <!-- FORMSPREE FORM -->
+      <form id="contactForm" action="https://formspree.io/f/mwvwrvpp" method="POST">
+        <input type="hidden" name="_subject" id="formSubject" value="New Inquiry — JJ Shop Website">
+        <input type="hidden" name="inquiry_type" id="inquiryType" value="General Inquiry">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name *</label>
+            <input type="text" id="firstName" name="first_name" placeholder="Juan" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name *</label>
+            <input type="text" id="lastName" name="last_name" placeholder="Dela Cruz" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" placeholder="juan@yourbusiness.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="business">Business Name</label>
+          <input type="text" id="business" name="business_name" placeholder="Juan's Sari-Sari Store">
+        </div>
+
+        <div class="form-group" id="serviceTypeGroup">
+          <label for="serviceType">Service / Product Interest</label>
+          <select id="serviceType" name="service_type">
+            <option value="">— Select one —</option>
+            <optgroup label="Products">
+              <option value="Sales & Inventory Manager — License">Sales & Inventory Manager — License</option>
+              <option value="Sales & Inventory Manager — Free Trial">Sales & Inventory Manager — Free Trial</option>
+            </optgroup>
+            <optgroup label="Custom Services">
+              <option value="Desktop Application">Desktop Application</option>
+              <option value="Mobile Application">Mobile Application</option>
+              <option value="Excel / VBA Automation">Excel / VBA Automation</option>
+              <option value="Web Application">Web Application</option>
+              <option value="Custom Solution">Custom Solution</option>
+            </optgroup>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="budgetGroup">
+          <label>Estimated Budget (for custom projects)</label>
+          <div class="budget-options">
+            <button type="button" class="budget-opt" onclick="selectBudget(this)">Under ₱5,000</button>
+            <button type="button" class="budget-opt" onclick="selectBudget(this)">₱5,000 – ₱15,000</button>
+            <button type="button" class="budget-opt" onclick="selectBudget(this)">₱15,000 – ₱40,000</button>
+            <button type="button" class="budget-opt" onclick="selectBudget(this)">₱40,000+</button>
+            <button type="button" class="budget-opt" onclick="selectBudget(this)">Not sure yet</button>
+          </div>
+          <input type="hidden" name="budget" id="budgetValue" value="">
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea id="message" name="message" placeholder="Tell us about your business needs, what you're looking for, or any questions you have..." required></textarea>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span id="submitText">📩 Send Message</span>
+          </button>
+          <p class="form-note">We typically reply within <strong style="color:var(--gold);">24 hours</strong> on business days.</p>
+        </div>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <span class="success-icon">✅</span>
+        <h3>Message Sent!</h3>
+        <p>Thank you for reaching out! We'll get back to you at <span id="successEmail" style="color:var(--gold);"></span> within 24 hours.</p>
+        <br>
+        <a href="index.html" class="btn btn-outline" style="display:inline-flex;margin-top:8px;">← Back to Home</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <img src="assets/img/logo.png" alt="JJ Shop Logo">
+        <div>
+          <div class="footer-brand-name">JJ SHOP</div>
+          <div class="footer-brand-sub">Solutions & Services</div>
+        </div>
+      </div>
+      <p class="footer-desc">Smart software solutions and custom development services for Philippine small businesses. EST. 2026.</p>
+    </div>
+    <div class="footer-col"><h4>Products</h4><ul>
+      <li><a href="products.html">Sales & Inventory Manager</a></li>
+      <li><a href="products.html#coming-soon">Coming Soon</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Services</h4><ul>
+      <li><a href="services.html">Desktop Apps</a></li>
+      <li><a href="services.html">Mobile Apps</a></li>
+      <li><a href="services.html">Excel / VBA</a></li>
+      <li><a href="services.html">Web Apps</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Company</h4><ul>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html">Request a Quote</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 <span>JJ Shop Solutions & Services</span>. All rights reserved.</div>
+    <div class="footer-copy">📧 jjshopsolutions04@gmail.com</div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // Particles
+  const pc=document.getElementById('particles');
+  for(let i=0;i<12;i++){
+    const p=document.createElement('div'); p.className='particle';
+    const s=Math.random()*4+2;
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;bottom:-20px;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*8}s;opacity:${Math.random()*0.4+0.1}`;
+    pc.appendChild(p);
+  }
+
+  // Reveal
+  const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('visible')),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  // Scroll top
+  const st=document.getElementById('scrollTop');
+  window.addEventListener('scroll',()=>{ st.classList.toggle('visible',window.scrollY>400); });
+  function toggleNav(){ document.getElementById('navLinks').classList.toggle('open'); }
+  window.addEventListener('scroll',()=>{
+    document.getElementById('navbar').style.boxShadow=window.scrollY>50?'0 4px 30px rgba(0,0,0,0.5)':'none';
+  });
+
+  // Inquiry tabs
+  function setTab(btn, type){
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('inquiryType').value = btn.textContent.trim();
+    document.getElementById('formSubject').value = `${btn.textContent.trim()} — JJ Shop Website`;
+    // Pre-select service type
+    const sel = document.getElementById('serviceType');
+    if(type==='product') sel.value='Sales & Inventory Manager — License';
+    else if(type==='trial') sel.value='Sales & Inventory Manager — Free Trial';
+    else sel.value='';
+  }
+
+  // Budget options
+  function selectBudget(btn){
+    document.querySelectorAll('.budget-opt').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    document.getElementById('budgetValue').value=btn.textContent;
+  }
+
+  // Pre-fill from URL params
+  const params=new URLSearchParams(window.location.search);
+  const prod=params.get('product'); const svc=params.get('service');
+  if(prod){
+    const sel=document.getElementById('serviceType');
+    if(prod==='invty') sel.value='Sales & Inventory Manager — License';
+    else if(prod.includes('trial')) sel.value='Sales & Inventory Manager — Free Trial';
+    if(prod.includes('trial')) setTab(document.getElementById('tab-trial'),'trial');
+    else setTab(document.getElementById('tab-product'),'product');
+  }
+  if(svc){
+    const map={desktop:'Desktop Application',mobile:'Mobile Application',excel:'Excel / VBA Automation',web:'Web Application',custom:'Custom Solution'};
+    const sel=document.getElementById('serviceType');
+    if(map[svc]) sel.value=map[svc];
+    setTab(document.getElementById('tab-custom'),'custom');
+  }
+
+  // Form submission
+  const form=document.getElementById('contactForm');
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();
+    const btn=document.getElementById('submitBtn');
+    const txt=document.getElementById('submitText');
+    btn.disabled=true; txt.textContent='Sending…';
+
+    try {
+      const data=new FormData(form);
+      const res=await fetch(form.action,{ method:'POST', body:data, headers:{Accept:'application/json'} });
+      if(res.ok){
+        form.style.display='none';
+        const succ=document.getElementById('formSuccess');
+        succ.style.display='block';
+        document.getElementById('successEmail').textContent=document.getElementById('email').value;
+      } else {
+        txt.textContent='❌ Error. Please email us directly.';
+        btn.disabled=false;
+      }
+    } catch(err){
+      txt.textContent='❌ Network error. Please try again.';
+      btn.disabled=false;
+    }
+  });
+</script>
+</body>
+</html>
