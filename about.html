@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — JJ Shop Solutions & Services</title>
+  <meta name="description" content="Learn about JJ Shop Solutions & Services — our story, mission, and the values that drive us to build great software for Philippine small businesses.">
+  <link rel="icon" type="image/png" href="assets/img/icon-192.png">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .page-hero {
+      padding:160px 48px 100px; text-align:center;
+      background:radial-gradient(ellipse at 50% 60%, var(--navy-mid) 0%, var(--navy) 70%);
+      position:relative; z-index:1; overflow:hidden;
+    }
+    .page-hero h1 { font-size:clamp(2rem,4vw,3.2rem); margin-bottom:14px; }
+    .page-hero p { font-size:1.05rem; color:var(--text-muted); max-width:560px; margin:0 auto; }
+    .hero-glow { position:absolute; top:10%; left:50%; transform:translateX(-50%);
+      width:500px; height:500px; pointer-events:none;
+      background:radial-gradient(circle,rgba(212,175,55,0.07) 0%,transparent 65%); }
+
+    /* STORY SECTION */
+    .story-section {
+      padding:100px 48px; max-width:1200px; margin:0 auto;
+      position:relative; z-index:1;
+    }
+    .story-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+    }
+    .story-text h2 { font-size:2rem; margin-bottom:20px; }
+    .story-text p { color:var(--text-muted); font-size:0.95rem; line-height:1.85; margin-bottom:18px; }
+    .story-visual {
+      position:relative; display:flex; align-items:center; justify-content:center;
+    }
+    .brand-display {
+      background:var(--glass); border:1px solid var(--glass-border);
+      border-radius:24px; backdrop-filter:blur(20px); padding:52px 44px;
+      text-align:center; position:relative; overflow:hidden;
+    }
+    .brand-display::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    }
+    .brand-logo-display {
+      width:100px; height:100px; margin:0 auto 20px;
+      border-radius:20px; overflow:hidden;
+      border:2px solid rgba(212,175,55,0.3);
+      box-shadow:0 0 40px rgba(212,175,55,0.2);
+    }
+    .brand-logo-display img { width:100%; height:100%; object-fit:contain; }
+    .brand-name-display { font-family:'Cinzel',serif; font-size:1.3rem; color:var(--gold); letter-spacing:3px; margin-bottom:6px; }
+    .brand-sub-display { font-size:0.72rem; letter-spacing:4px; text-transform:uppercase; color:var(--text-muted); margin-bottom:24px; }
+    .brand-est { display:inline-block; padding:8px 24px; border-radius:30px;
+      border:1px solid rgba(212,175,55,0.35); background:rgba(212,175,55,0.07);
+      font-size:0.78rem; letter-spacing:3px; color:var(--gold-dim); }
+    .corner-deco { position:absolute; width:32px; height:32px; border-color:rgba(212,175,55,0.3); border-style:solid; }
+    .corner-deco.tl { top:16px; left:16px; border-width:1.5px 0 0 1.5px; }
+    .corner-deco.tr { top:16px; right:16px; border-width:1.5px 1.5px 0 0; }
+    .corner-deco.bl { bottom:16px; left:16px; border-width:0 0 1.5px 1.5px; }
+    .corner-deco.br { bottom:16px; right:16px; border-width:0 1.5px 1.5px 0; }
+
+    /* MISSION / VALUES */
+    .values-section {
+      padding:0 48px 100px; position:relative; z-index:1;
+    }
+    .values-inner { max-width:1100px; margin:0 auto; }
+    .values-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:60px;
+    }
+    .value-card {
+      background:var(--glass); border:1px solid var(--glass-border);
+      border-radius:var(--radius); padding:40px 32px; backdrop-filter:blur(20px);
+      transition:var(--transition); text-align:center;
+    }
+    .value-card:hover { transform:translateY(-5px); border-color:rgba(212,175,55,0.4); box-shadow:0 12px 40px rgba(212,175,55,0.12); }
+    .value-icon { font-size:2.4rem; margin-bottom:18px; display:block; }
+    .value-card h3 { font-size:1.05rem; margin-bottom:10px; color:var(--gold); }
+    .value-card p { font-size:0.88rem; color:var(--text-muted); line-height:1.65; }
+
+    /* TIMELINE */
+    .timeline-section {
+      padding:0 48px 100px; position:relative; z-index:1;
+    }
+    .timeline-inner { max-width:800px; margin:0 auto; }
+    .timeline { position:relative; margin-top:60px; padding-left:40px; }
+    .timeline::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:1.5px;
+      background:linear-gradient(180deg,var(--gold),rgba(212,175,55,0.1));
+    }
+    .timeline-item { position:relative; margin-bottom:44px; }
+    .timeline-dot {
+      position:absolute; left:-45px; top:4px;
+      width:12px; height:12px; border-radius:50%;
+      background:var(--gold); box-shadow:0 0 12px rgba(212,175,55,0.5);
+    }
+    .timeline-date { font-size:0.72rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold-dim); margin-bottom:8px; }
+    .timeline-item h3 { font-size:1.05rem; margin-bottom:8px; }
+    .timeline-item p { font-size:0.88rem; color:var(--text-muted); line-height:1.65; }
+    .timeline-future .timeline-dot { background:transparent; border:1.5px solid rgba(212,175,55,0.4); box-shadow:none; }
+    .timeline-future h3 { color:var(--text-muted); }
+    .timeline-future p { opacity:0.6; }
+
+    /* STATS */
+    .stats-section {
+      padding:0 48px 100px; position:relative; z-index:1;
+    }
+    .stats-inner {
+      max-width:1000px; margin:0 auto;
+      background:var(--glass); border:1px solid var(--glass-border);
+      border-radius:20px; backdrop-filter:blur(20px);
+      display:grid; grid-template-columns:repeat(4,1fr);
+      overflow:hidden;
+    }
+    .stat-item {
+      padding:48px 28px; text-align:center; position:relative;
+      border-right:1px solid var(--glass-border); transition:var(--transition);
+    }
+    .stat-item:last-child { border-right:none; }
+    .stat-item:hover { background:rgba(212,175,55,0.05); }
+    .stat-num { font-family:'Cinzel',serif; font-size:2.4rem; color:var(--gold); display:block; margin-bottom:8px; }
+    .stat-label { font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); }
+
+    /* CTA */
+    .cta-section {
+      padding:100px 48px; text-align:center;
+      background:radial-gradient(ellipse at 50% 50%,rgba(10,30,64,0.8) 0%,transparent 70%);
+      position:relative; z-index:1;
+    }
+    .cta-section h2 { font-size:2.2rem; margin-bottom:16px; }
+    .cta-section p { color:var(--text-muted); max-width:500px; margin:0 auto 44px; }
+
+    @media(max-width:900px){
+      .page-hero { padding:130px 24px 70px; }
+      .story-section { padding:70px 24px; }
+      .story-grid { grid-template-columns:1fr; gap:48px; }
+      .values-section { padding:0 24px 70px; }
+      .values-grid { grid-template-columns:1fr 1fr; }
+      .timeline-section { padding:0 24px 70px; }
+      .stats-section { padding:0 24px 70px; }
+      .stats-inner { grid-template-columns:1fr 1fr; }
+      .stat-item:nth-child(2) { border-right:none; }
+      .stat-item:nth-child(3) { border-top:1px solid var(--glass-border); }
+      .cta-section { padding:70px 24px; }
+    }
+    @media(max-width:560px){
+      .values-grid { grid-template-columns:1fr; }
+      .stats-inner { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-logo">
+    <img src="assets/img/logo.png" alt="JJ Shop Logo">
+    <div>
+      <div class="nav-logo-text">JJ SHOP</div>
+      <div class="nav-logo-sub">Solutions & Services</div>
+    </div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get a Quote</a>
+  <div class="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="page-hero">
+  <div class="hero-glow"></div>
+  <div class="particles" id="particles"></div>
+  <div class="reveal">
+    <div class="section-eyebrow">Our Story</div>
+    <h1>About <span class="gold-text">JJ Shop</span></h1>
+    <p>A small Filipino business with a big mission — making professional-grade software accessible to every small business in the Philippines.</p>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story-section section">
+  <div class="story-grid">
+    <div class="story-text reveal">
+      <div class="section-eyebrow" style="justify-content:flex-start;">Who We Are</div>
+      <h2>Born from a <span class="gold-text">Real Business Problem</span></h2>
+      <p>JJ Shop Solutions & Services was founded in 2026 after seeing firsthand how many small Filipino businesses were still running on paper records, basic Excel sheets, and manual processes — not because they didn't want better tools, but because professional software was too expensive or too complicated for them.</p>
+      <p>We set out to change that. Our goal is simple: <strong style="color:var(--gold);">build powerful, affordable, easy-to-use software</strong> specifically designed around how Philippine small businesses actually operate.</p>
+      <p>We understand the peso, the local business culture, the sari-sari store, the boutique, the small trading company — because we've worked with them and we are one of them.</p>
+    </div>
+    <div class="story-visual reveal">
+      <div class="brand-display">
+        <div class="corner-deco tl"></div>
+        <div class="corner-deco tr"></div>
+        <div class="corner-deco bl"></div>
+        <div class="corner-deco br"></div>
+        <div class="brand-logo-display">
+          <img src="assets/img/logo.png" alt="JJ Shop Logo">
+        </div>
+        <div class="brand-name-display">JJ SHOP</div>
+        <div class="brand-sub-display">Solutions &amp; Services</div>
+        <div class="brand-est">EST. 2026 &nbsp;·&nbsp; Philippines</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section section">
+  <div class="stats-inner reveal">
+    <div class="stat-item">
+      <span class="stat-num">2026</span>
+      <span class="stat-label">Founded</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">1+</span>
+      <span class="stat-label">Products Live</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">5+</span>
+      <span class="stat-label">Services Offered</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">PH</span>
+      <span class="stat-label">Based in Philippines</span>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section section">
+  <div class="values-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Our Values</div>
+      <h2>What <span class="gold-text">Drives Us</span></h2>
+      <p>These principles guide every product we build and every client we serve.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <span class="value-icon">🎯</span>
+        <h3>Purpose-Built</h3>
+        <p>Every feature we build solves a real problem. No bloat, no unnecessary complexity — just tools that work for your business.</p>
+      </div>
+      <div class="value-card reveal">
+        <span class="value-icon">🤝</span>
+        <h3>Customer First</h3>
+        <p>Your success is our success. We prioritize long-term relationships over one-time transactions.</p>
+      </div>
+      <div class="value-card reveal">
+        <span class="value-icon">💡</span>
+        <h3>Always Improving</h3>
+        <p>We listen to feedback, ship updates, and continuously refine our products. Good is never good enough.</p>
+      </div>
+      <div class="value-card reveal">
+        <span class="value-icon">🔒</span>
+        <h3>Honest & Transparent</h3>
+        <p>Clear pricing, honest timelines, no hidden terms. You always know exactly what you're getting.</p>
+      </div>
+      <div class="value-card reveal">
+        <span class="value-icon">⚡</span>
+        <h3>Lean & Efficient</h3>
+        <p>We work fast without cutting corners. Agile development means you get results sooner.</p>
+      </div>
+      <div class="value-card reveal">
+        <span class="value-icon">🇵🇭</span>
+        <h3>Proudly Filipino</h3>
+        <p>Built by Filipinos for Filipino businesses. We understand the local market like no foreign software company can.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section section">
+  <div class="timeline-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Our Journey</div>
+      <h2>The <span class="gold-text">Roadmap</span></h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Early 2026</div>
+        <h3>JJ Shop is Founded</h3>
+        <p>Started with a clear mission — affordable, professional software for Philippine small businesses. Development of the first product begins.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2026</div>
+        <h3>Invty App — First Product Launch</h3>
+        <p>The JJ Shop Sales & Inventory Manager launches. A complete desktop solution for small retailers — offline-first, network-ready, and Philippine peso-native.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2026</div>
+        <h3>Official Website & Custom Services Launch</h3>
+        <p>Expanded beyond products to offer custom software development services for businesses with unique needs.</p>
+      </div>
+      <div class="timeline-item timeline-future">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Coming Soon</div>
+        <h3>More Products in the Pipeline</h3>
+        <p>Quotation maker, payroll system, purchase order system, and more tools designed to complete the JJ Shop business ecosystem.</p>
+      </div>
+      <div class="timeline-item timeline-future">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Future</div>
+        <h3>Growth & Expansion</h3>
+        <p>Reaching more Philippine businesses, refining existing products, and adding new service offerings based on customer feedback.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section section reveal">
+  <div class="section-eyebrow">Work With Us</div>
+  <h2>Let's <span class="gold-text">Work Together</span></h2>
+  <p>Whether you need a product license or a custom-built solution, we're ready to help your business grow.</p>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <a href="contact.html" class="btn btn-primary">📩 Get in Touch</a>
+    <a href="products.html" class="btn btn-outline">📦 See Our Products</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <img src="assets/img/logo.png" alt="JJ Shop Logo">
+        <div>
+          <div class="footer-brand-name">JJ SHOP</div>
+          <div class="footer-brand-sub">Solutions & Services</div>
+        </div>
+      </div>
+      <p class="footer-desc">Smart software solutions and custom development services for Philippine small businesses. EST. 2026.</p>
+    </div>
+    <div class="footer-col"><h4>Products</h4><ul>
+      <li><a href="products.html">Sales & Inventory Manager</a></li>
+      <li><a href="products.html#coming-soon">Coming Soon</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Services</h4><ul>
+      <li><a href="services.html">Desktop Apps</a></li>
+      <li><a href="services.html">Mobile Apps</a></li>
+      <li><a href="services.html">Excel / VBA</a></li>
+      <li><a href="services.html">Web Apps</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Company</h4><ul>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html">Request a Quote</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 <span>JJ Shop Solutions & Services</span>. All rights reserved.</div>
+    <div class="footer-copy">📧 jjshopsolutions04@gmail.com</div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  const pc=document.getElementById('particles');
+  for(let i=0;i<12;i++){
+    const p=document.createElement('div'); p.className='particle';
+    const s=Math.random()*4+2;
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;bottom:-20px;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*8}s;opacity:${Math.random()*0.4+0.1}`;
+    pc.appendChild(p);
+  }
+  const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('visible')),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  const st=document.getElementById('scrollTop');
+  window.addEventListener('scroll',()=>{ st.classList.toggle('visible',window.scrollY>400); });
+  function toggleNav(){ document.getElementById('navLinks').classList.toggle('open'); }
+  window.addEventListener('scroll',()=>{
+    document.getElementById('navbar').style.boxShadow=window.scrollY>50?'0 4px 30px rgba(0,0,0,0.5)':'none';
+  });
+</script>
+</body>
+</html>
